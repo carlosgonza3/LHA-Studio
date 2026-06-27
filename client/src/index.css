@@ -1,0 +1,237 @@
+@font-face {
+    font-family: 'Juana';
+    src:
+            url('https://db.onlinewebfonts.com/t/5ce9655f6b33e1aaa1c62de0397a79dc.woff2')
+            format('woff2');
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'JuanaLight';
+    src: url('./assets/fonts/Juana-light.otf') format('opentype');
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+}
+
+:root {
+    /* Color palette */
+    --color-cream: #f4f1de;
+    --color-black: #090302;
+    --color-mauve: #795c5f;
+
+    /* Semantic colors */
+    --color-background: var(--color-cream);
+    --color-surface: #ebe7cf;
+    --color-text: var(--color-black);
+    --color-text-muted: var(--color-mauve);
+    --color-primary: var(--color-mauve);
+    --color-primary-hover: #634a4d;
+    --color-border: rgb(9 3 2 / 16%);
+
+    /* Typography */
+    --font-display: 'Juana', Georgia, serif;
+    --font-body: JuanaLight, Helvetica, sans-serif;
+
+    /* Layout */
+    --page-width: 1440px;
+    --page-padding: clamp(1.25rem, 4vw, 4rem);
+    --page-spacing: clamp(4rem, 8vw, 8rem);
+    --section-spacing: clamp(5rem, 10vw, 10rem);
+
+    /* Borders */
+    --radius-small: 0.5rem;
+    --radius-medium: 1rem;
+    --radius-large: 2rem;
+    --radius-pill: 999px;
+
+    /* Motion */
+    --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+    --transition-fast: 180ms ease;
+    --transition-medium: 400ms var(--ease-out);
+
+    color: var(--color-text);
+    background-color: var(--color-background);
+    font-family: var(--font-body);
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-width: 320px;
+    min-height: 100vh;
+    margin: 0;
+    overflow-x: hidden;
+    background-color: var(--color-background);
+    color: var(--color-text);
+}
+
+body,
+button,
+input,
+textarea,
+select {
+    font: inherit;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+    margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+}
+
+p {
+    line-height: 1.6;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button {
+    padding: 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    cursor: pointer;
+}
+
+button,
+a {
+    -webkit-tap-highlight-color: transparent;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+    display: block;
+    max-width: 100%;
+}
+
+img {
+    height: auto;
+}
+
+input,
+textarea,
+select {
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    color: inherit;
+}
+
+textarea {
+    resize: vertical;
+}
+
+ul,
+ol {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+::selection {
+    background-color: var(--color-mauve);
+    color: var(--color-cream);
+}
+
+:focus-visible {
+    outline: 2px solid var(--color-mauve);
+    outline-offset: 4px;
+}
+
+#root {
+    min-height: 100vh;
+}
+
+/* Shared layout utilities */
+
+.page {
+    width: 100%;
+    min-height: 80svh;
+    padding:
+            var(--page-spacing)
+            var(--page-padding);
+}
+
+.container {
+    width: min(
+            calc(100% - (var(--page-padding) * 2)),
+            var(--page-width)
+    );
+    margin-inline: auto;
+}
+
+.section {
+    padding-block: var(--section-spacing);
+}
+
+.eyebrow {
+    color: var(--color-text-muted);
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+.visuallyHidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
