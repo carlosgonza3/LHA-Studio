@@ -3,14 +3,9 @@ import { Link } from 'react-router';
 export function Footer() {
     return (
         <footer className="siteFooter">
-            <p className="footerLabel">Have a project in mind?</p>
-
-            <Link className="footerTitle" to="/contact">
-                Let&apos;s talk.
-            </Link>
 
             <div className="footerBottom">
-                <p>© 2026 Your Name</p>
+                <p>© 2026 LHA Studio</p>
 
                 <div className="footerSocials">
                     <a

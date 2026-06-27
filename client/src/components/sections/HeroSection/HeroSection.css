@@ -1,0 +1,217 @@
+.heroSection {
+    align-items: flex-start;
+    overflow: hidden;
+}
+
+.homeIntro {
+    width: 100%;
+    padding-top: clamp(2rem, 5vw, 5rem);
+}
+
+.homeTitle {
+    padding-left: 6rem;
+    display: flex;
+    align-items: baseline;
+    flex-wrap: nowrap;
+    gap: clamp(0.5rem, 3vw, 3rem);
+    margin-top: 7rem;
+    white-space: nowrap;
+}
+
+.homeTitle h1 {
+    margin: 0;
+
+    font-family: var(--font-display);
+    font-size: clamp(4rem, 12vw, 13rem);
+    font-weight: 400;
+    line-height: 0.75;
+    text-transform: uppercase;
+
+    opacity: 0;
+    will-change: transform, opacity;
+
+    transition:
+            opacity 900ms cubic-bezier(0.22, 1, 0.36, 1),
+            transform 1200ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.homeTitle h1:nth-child(2) {
+    transition-delay: 120ms;
+}
+
+.homeDescriptionRow {
+    position: relative;
+    padding-left: 6rem;
+    display: flex;
+    flex-direction: column;
+    width: 75%;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 3rem;
+
+    margin-top: clamp(2rem, 4vw, 4rem);
+    padding-top: 1.5rem;
+
+    line-height: 2rem;
+}
+
+.homeDescriptionRow::before {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    margin-left: 6rem;
+    height: 1px;
+    background: var(--color-border);
+    content: '';
+
+    opacity: 0;
+    transform: scaleX(0);
+    transform-origin: left;
+    will-change: transform, opacity;
+
+    transition:
+            opacity 850ms cubic-bezier(0.22, 1, 0.36, 1) 180ms,
+            transform 1100ms cubic-bezier(0.22, 1, 0.36, 1) 180ms;
+}
+
+.homeDescription {
+    max-width: 70rem;
+
+    color: var(--color-text);
+
+    font-size: 1.4rem;
+    line-height: 2rem;
+    letter-spacing: 0.08rem;
+
+    opacity: 0;
+    will-change: transform, opacity;
+
+    transition:
+            opacity 900ms cubic-bezier(0.22, 1, 0.36, 1) 280ms,
+            transform 1200ms cubic-bezier(0.22, 1, 0.36, 1) 280ms;
+}
+
+/* Section below viewport */
+
+.heroSection.sectionMotionUp:not(.sectionMotionActive)
+.homeTitle h1 {
+    transform: translate3d(-2rem, 3rem, 0);
+}
+
+.heroSection.sectionMotionUp:not(.sectionMotionActive)
+.homeDescription {
+    transform: translate3d(-1.5rem, 2rem, 0);
+}
+
+/* Section above viewport */
+
+.heroSection.sectionMotionDown:not(.sectionMotionActive)
+.homeTitle h1 {
+    transform: translate3d(-2rem, -3rem, 0);
+}
+
+.heroSection.sectionMotionDown:not(.sectionMotionActive)
+.homeDescription {
+    transform: translate3d(-1.5rem, -2rem, 0);
+}
+
+/* Active section */
+
+.heroSection.sectionMotionActive .homeTitle h1,
+.heroSection.sectionMotionActive .homeDescription {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+}
+
+.heroSection.sectionMotionActive .homeDescriptionRow::before {
+    opacity: 1;
+    transform: scaleX(1);
+}
+
+/* Leaving upward */
+
+.heroSection.sectionMotionExited.sectionMotionUp
+.homeTitle h1 {
+    opacity: 0;
+    transform: translate3d(1rem, -3rem, 0);
+}
+
+.heroSection.sectionMotionExited.sectionMotionUp
+.homeDescription {
+    opacity: 0;
+    transform: translate3d(0, -2rem, 0);
+}
+
+/* Leaving downward */
+
+.heroSection.sectionMotionExited.sectionMotionDown
+.homeTitle h1 {
+    opacity: 0;
+    transform: translate3d(-1rem, 3rem, 0);
+}
+
+.heroSection.sectionMotionExited.sectionMotionDown
+.homeDescription {
+    opacity: 0;
+    transform: translate3d(0, 2rem, 0);
+}
+
+.heroSection.sectionMotionExited
+.homeDescriptionRow::before {
+    opacity: 0;
+    transform: scaleX(0);
+}
+
+@media (max-width: 1000px) {
+
+}
+
+@media (max-width: 700px) {
+    .homeIntro {
+        padding-top: 4rem;
+    }
+
+    .homeTitle {
+        margin-top: 3rem;
+        display: flex;
+        flex-direction: column;
+        padding-left: 1.5rem;
+        align-items: baseline;
+        flex-wrap: nowrap;
+        gap: clamp(0.35rem, 2vw, 0.8rem);
+    }
+
+    .homeTitle h1 {
+        font-size: clamp(3rem, 16vw, 7rem);
+    }
+
+    .homeDescriptionRow {
+        padding-left: 2rem;
+        width: 80%;
+        align-items: flex-start;
+        gap: 2rem;
+    }
+
+    .homeDescriptionRow::before {
+        margin-left: 1rem;
+    }
+
+    .homeDescription {
+        max-width: 22rem;
+        font-size: 1.05rem;
+        line-height: 1.6;
+        letter-spacing: 0.04rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .homeTitle h1,
+    .homeDescription,
+    .homeDescriptionRow::before {
+        opacity: 1;
+        transform: none;
+        transition: none;
+        will-change: auto;
+    }
+}

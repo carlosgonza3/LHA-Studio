@@ -1,0 +1,236 @@
+.aboutSection {
+    align-items: center;
+    overflow: hidden;
+
+    padding:
+            clamp(5rem, 9vw, 9rem)
+            var(--page-padding);
+
+    background: var(--color-black);
+    color: var(--color-cream);
+}
+
+.aboutInner {
+    display: flex;
+    width: 100%;
+    max-width: var(--page-width);
+    min-height: 100%;
+    align-items: center;
+    margin-inline: auto;
+}
+
+.aboutContent {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+}
+
+.aboutIntroduction {
+    width: 100%;
+}
+
+.aboutStatement {
+    width: 100%;
+    margin: 0;
+
+    color: var(--color-cream);
+
+    font-family: var(--font-display);
+    font-size: 2.4rem;
+    font-weight: 400;
+    line-height: 1.32;
+
+    opacity: 0;
+    transform: translate3d(0, 4rem, 0);
+    will-change: transform, opacity;
+
+    transition:
+            opacity 1000ms cubic-bezier(0.22, 1, 0.36, 1),
+            transform 1300ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.aboutDivider {
+    width: 80%;
+    height: 1px;
+    margin-top: clamp(3rem, 5vw, 5rem);
+
+    background: rgb(244 241 222 / 18%);
+
+    opacity: 0;
+    transform: scaleX(0);
+    transform-origin: center;
+    will-change: transform, opacity;
+
+    transition:
+            opacity 900ms cubic-bezier(0.22, 1, 0.36, 1) 160ms,
+            transform 1200ms cubic-bezier(0.22, 1, 0.36, 1) 160ms;
+}
+
+.aboutSkills {
+    width: 100%;
+}
+
+.aboutSkillsList {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+
+    margin: 40px 0 0;
+    padding: 1.5rem 0 0;
+
+    list-style: none;
+}
+
+.aboutSkillsList li {
+    display: inline-flex;
+    align-items: center;
+
+    color: rgb(244 241 222 / 78%);
+
+    font-family: var(--font-body);
+    font-size: 1.5rem;
+    line-height: 1.4;
+    letter-spacing: 0.035em;
+
+    opacity: 0;
+    transform: translate3d(0, 2rem, 0);
+    will-change: transform, opacity;
+
+    transition:
+            opacity 800ms cubic-bezier(0.22, 1, 0.36, 1)
+            calc(280ms + (var(--skill-index) * 80ms)),
+            transform 1000ms cubic-bezier(0.22, 1, 0.36, 1)
+            calc(280ms + (var(--skill-index) * 80ms));
+}
+
+.aboutSkillsList li:not(:first-child)::before {
+    margin-inline: 1.25rem;
+
+    color: var(--color-mauve);
+
+    content: '•';
+
+    font-size: 0.8em;
+    line-height: 1;
+}
+
+/* Section is positioned above the viewport. */
+
+.aboutSection.sectionMotionDown:not(.sectionMotionActive)
+.aboutStatement {
+    transform: translate3d(0, -4rem, 0);
+}
+
+.aboutSection.sectionMotionDown:not(.sectionMotionActive)
+.aboutSkillsList li {
+    transform: translate3d(0, -2rem, 0);
+}
+
+/* Section is active. */
+
+.aboutSection.sectionMotionActive .aboutStatement,
+.aboutSection.sectionMotionActive .aboutSkillsList li {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+}
+
+.aboutSection.sectionMotionActive .aboutDivider {
+    opacity: 1;
+    transform: scaleX(1);
+}
+
+/* Section exits through the top. */
+
+.aboutSection.sectionMotionExited.sectionMotionUp
+.aboutStatement {
+    opacity: 0;
+    transform: translate3d(0, -4rem, 0);
+}
+
+.aboutSection.sectionMotionExited.sectionMotionUp
+.aboutSkillsList li {
+    opacity: 0;
+    transform: translate3d(0, -2rem, 0);
+}
+
+/* Section exits through the bottom. */
+
+.aboutSection.sectionMotionExited.sectionMotionDown
+.aboutStatement {
+    opacity: 0;
+    transform: translate3d(0, 4rem, 0);
+}
+
+.aboutSection.sectionMotionExited.sectionMotionDown
+.aboutSkillsList li {
+    opacity: 0;
+    transform: translate3d(0, 2rem, 0);
+}
+
+.aboutSection.sectionMotionExited .aboutDivider {
+    opacity: 0;
+    transform: scaleX(0);
+}
+
+@media (max-width: 900px) {
+    .aboutStatement {
+        max-width: 50rem;
+    }
+
+    .aboutDivider,
+    .aboutSkills {
+        width: 90%;
+    }
+}
+
+@media (max-width: 700px) {
+    .aboutSection {
+        padding-block: clamp(3rem, 8vh, 5rem);
+    }
+
+    .aboutStatement {
+        width: 100%;
+
+        font-size: 1.3rem;
+        line-height: 1.34;
+    }
+
+    .aboutDivider {
+        width: 100%;
+        margin-top: 3rem;
+    }
+
+    .aboutSkills {
+        width: 100%;
+    }
+
+    .aboutSkillsList {
+        margin-top: 2rem;
+        padding-top: 1.25rem;
+    }
+
+    .aboutSkillsList li {
+        font-size: 1.2rem;
+    }
+
+    .aboutSkillsList li:not(:first-child)::before {
+        margin-inline: 0.75rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .aboutStatement,
+    .aboutDivider,
+    .aboutSkillsList li {
+        opacity: 1;
+        transform: none;
+        transition: none;
+        will-change: auto;
+    }
+}

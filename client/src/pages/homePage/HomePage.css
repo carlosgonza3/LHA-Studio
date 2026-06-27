@@ -1,0 +1,29 @@
+html.homeSnapEnabled {
+    --site-header-height: 73px;
+
+    scroll-padding-top: 0;
+    scroll-snap-type: y mandatory;
+}
+
+.homePage {
+    width: 100%;
+}
+
+html.homeSnapEnabled .siteFooter {
+    scroll-margin-top: 0;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+}
+
+@media (max-width: 700px) {
+    html.homeSnapEnabled {
+        --site-header-height: 65px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html.homeSnapEnabled {
+        scroll-behavior: auto;
+        scroll-snap-type: y proximity;
+    }
+}

@@ -1,7 +1,13 @@
-import { defineConfig } from 'vite';
+import {
+    defineConfig,
+} from 'vite';
+
 import react from '@vitejs/plugin-react';
 
 export default defineConfig({
-    plugins: [react()],
-    base: '/LHA-Studio/',
+    base: process.env.VITE_BASE_PATH ?? '/',
+
+    plugins: [
+        react(),
+    ],
 });

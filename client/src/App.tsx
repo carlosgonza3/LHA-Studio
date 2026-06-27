@@ -3,10 +3,10 @@ import { Route, Routes } from 'react-router';
 import { RootLayout } from './components/layout/RootLayout';
 
 // import { AboutPage } from './pages/AboutPage';
-// import { ContactPage } from './pages/ContactPage';
-import { HomePage } from './pages/HomePage';
-import { NotFoundPage } from './pages/NotFoundPage';
-import { ProjectPage } from './pages/ProjectPage';
+// import { contactPage } from './pages/contactPage';
+import { HomePage } from './pages/homePage/HomePage';
+import { NotFoundPage } from './pages/notFoundPage/NotFoundPage';
+import { ProjectPage } from './pages/projectPage/ProjectPage';
 
 function App() {
     return (
