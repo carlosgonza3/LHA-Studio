@@ -14,8 +14,12 @@ type NavigationClassArguments = {
     isActive: boolean;
 };
 
+type HomeSectionId =
+    | 'about'
+    | 'grid-section';
+
 type HomeLocationState = {
-    scrollToSection?: string;
+    scrollToSection?: HomeSectionId;
 };
 
 function getNavigationClass({
@@ -30,34 +34,34 @@ export function Header() {
     const location = useLocation();
     const navigate = useNavigate();
 
-    const [isAboutActive, setIsAboutActive] = useState(false);
+    const [activeSection, setActiveSection] =
+        useState<HomeSectionId | null>(null);
 
     useEffect(() => {
         const locationState =
             location.state as HomeLocationState | null;
 
+        const sectionId = locationState?.scrollToSection;
+
         if (
             location.pathname !== '/'
-            || locationState?.scrollToSection !== 'about'
+            || !sectionId
         ) {
             return;
         }
 
         const animationFrameId = window.requestAnimationFrame(() => {
-            const aboutSection = document.getElementById('about');
+            const section = document.getElementById(sectionId);
 
-            aboutSection?.scrollIntoView({
+            section?.scrollIntoView({
                 behavior: 'smooth',
                 block: 'start',
             });
 
-            navigate(
-                '/',
-                {
-                    replace: true,
-                    state: null,
-                },
-            );
+            navigate('/', {
+                replace: true,
+                state: null,
+            });
         });
 
         return () => {
@@ -71,43 +75,78 @@ export function Header() {
 
     useEffect(() => {
         if (location.pathname !== '/') {
-            setIsAboutActive(false);
+            setActiveSection(null);
 
             return;
         }
 
-        const aboutSection = document.getElementById('about');
+        const sectionIds: HomeSectionId[] = [
+            'about',
+            'grid-section',
+        ];
 
-        if (!aboutSection) {
-            setIsAboutActive(false);
+        const sections = sectionIds
+            .map((sectionId) =>
+                document.getElementById(sectionId),
+            )
+            .filter(
+                (
+                    section,
+                ): section is HTMLElement => section !== null,
+            );
+
+        if (sections.length === 0) {
+            setActiveSection(null);
 
             return;
         }
 
         const observer = new IntersectionObserver(
-            ([entry]) => {
-                setIsAboutActive(entry.isIntersecting);
+            (entries) => {
+                const visibleSection = entries
+                    .filter((entry) => entry.isIntersecting)
+                    .sort(
+                        (firstEntry, secondEntry) =>
+                            secondEntry.intersectionRatio
+                            - firstEntry.intersectionRatio,
+                    )[0];
+
+                if (!visibleSection) {
+                    return;
+                }
+
+                setActiveSection(
+                    visibleSection.target.id as HomeSectionId,
+                );
             },
             {
-                threshold: 0.5,
+                threshold: [
+                    0.2,
+                    0.4,
+                    0.6,
+                ],
             },
         );
 
-        observer.observe(aboutSection);
+        sections.forEach((section) => {
+            observer.observe(section);
+        });
 
         return () => {
             observer.disconnect();
         };
     }, [location.pathname]);
 
-    function handleAboutClick() {
+    function handleSectionClick(
+        sectionId: HomeSectionId,
+    ) {
         if (location.pathname !== '/') {
             return;
         }
 
-        const aboutSection = document.getElementById('about');
+        const section = document.getElementById(sectionId);
 
-        aboutSection?.scrollIntoView({
+        section?.scrollIntoView({
             behavior: 'smooth',
             block: 'start',
         });
@@ -128,7 +167,7 @@ export function Header() {
 
                 <Link
                     className={
-                        isAboutActive
+                        activeSection === 'about'
                             ? 'navigationLink navigationLinkActive'
                             : 'navigationLink'
                     }
@@ -136,17 +175,29 @@ export function Header() {
                     state={{
                         scrollToSection: 'about',
                     }}
-                    onClick={handleAboutClick}
+                    onClick={() => {
+                        handleSectionClick('about');
+                    }}
                 >
                     ABOUT
                 </Link>
 
-                <NavLink
-                    className={getNavigationClass}
-                    to="/work"
+                <Link
+                    className={
+                        activeSection === 'grid-section'
+                            ? 'navigationLink navigationLinkActive'
+                            : 'navigationLink'
+                    }
+                    to="/"
+                    state={{
+                        scrollToSection: 'grid-section',
+                    }}
+                    onClick={() => {
+                        handleSectionClick('grid-section');
+                    }}
                 >
-                    SELECTED WORKS
-                </NavLink>
+                    SELECTED WORK
+                </Link>
             </nav>
         </header>
     );

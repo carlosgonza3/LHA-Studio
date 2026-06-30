@@ -11,8 +11,8 @@ import {
 } from '../../components/sections/HeroSection/HeroSection';
 
 import {
-    NewSection,
-} from '../../components/sections/NewSection/NewSection'
+    ProjectsGridSection,
+} from '../../components/sections/ProjectsGridSection/ProjectsGridSection';
 
 import './HomePage.css';
 
@@ -33,7 +33,7 @@ export function HomePage() {
         <div className="homePage">
             <HeroSection />
             <AboutSection />
-            <NewSection />
+            <ProjectsGridSection />
         </div>
     );
 }

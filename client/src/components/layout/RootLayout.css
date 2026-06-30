@@ -169,6 +169,9 @@ html.headerOnDarkSection .siteHeaderScrolled {
 
     background: var(--color-black);
     color: var(--color-cream);
+
+    scroll-snap-align: none;
+    scroll-snap-stop: normal;
 }
 
 .footerLabel {

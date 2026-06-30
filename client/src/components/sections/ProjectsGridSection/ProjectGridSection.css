@@ -1,0 +1,180 @@
+.projectsGridSection {
+    width: 100%;
+    padding:
+            clamp(5rem, 10vw, 10rem)
+            var(--page-padding);
+
+    background: var(--color-cream);
+    color: var(--color-black);
+    scroll-margin-top: 5rem;
+}
+
+.pageSection.projectsGridSection {
+    min-height: auto;
+    scroll-snap-align: none;
+    scroll-snap-stop: normal;
+}
+
+.projectsGridSectionNoSnap {
+    min-height: auto;
+    scroll-snap-align: none;
+    scroll-snap-stop: normal;
+}
+
+.projectsGridHeader {
+    display: flex;
+    width: min(100%, var(--page-width));
+    align-items: center;
+    justify-content: center;
+
+    margin-inline: auto;
+    padding-bottom: 1.25rem;
+
+    border-bottom: 1px solid var(--color-border);
+}
+
+.projectsGridLabel,
+.projectsGridCount {
+    font-size: 0.75rem;
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    justify-content: center;
+    align-items: center;
+}
+
+.projectsGrid {
+    display: grid;
+    width: min(100%, var(--page-width));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(1rem, 2vw, 2rem);
+
+    margin:
+            clamp(2rem, 4vw, 4rem)
+            auto 0;
+}
+
+.projectGridItem {
+    min-width: 0;
+    overflow: hidden;
+}
+
+.projectGridLink {
+    position: relative;
+    display: block;
+    width: 100%;
+    overflow: hidden;
+    background: var(--color-black);
+    aspect-ratio: 1 / 1;
+}
+
+.projectGridImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+
+    transform: scale(1);
+
+    transition:
+            transform 900ms var(--ease-out),
+            opacity 600ms var(--ease-out);
+}
+
+.projectGridOverlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(1.5rem, 3vw, 3rem);
+    background: rgb(9 3 2 / 48%);
+    color: var(--color-cream);
+    opacity: 0;
+    transition:
+            opacity 450ms var(--ease-out);
+}
+
+.projectGridTitle {
+    max-width: 90%;
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    font-weight: 400;
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(1rem);
+    transition:
+            opacity 500ms var(--ease-out),
+            transform 650ms var(--ease-out);
+}
+
+.projectGridLink:hover .projectGridImage,
+.projectGridLink:focus-visible .projectGridImage {
+    opacity: 0.78;
+    transform: scale(1.035);
+}
+
+.projectGridLink:hover .projectGridOverlay,
+.projectGridLink:focus-visible .projectGridOverlay {
+    opacity: 1;
+}
+
+.projectGridLink:hover .projectGridTitle,
+.projectGridLink:focus-visible .projectGridTitle {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@media (max-width: 700px) {
+    .projectsGridSection {
+        padding-block: 5rem;
+    }
+
+    .projectsGrid {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+        margin-top: 2rem;
+    }
+
+    .projectGridLink {
+        aspect-ratio: 1 / 1;
+    }
+
+    .projectGridOverlay {
+        opacity: 1;
+
+        background:
+                linear-gradient(
+                        180deg,
+                        rgb(9 3 2 / 52%) 0%,
+                        transparent 55%
+                );
+    }
+
+    .projectGridTitle {
+        margin-top: 0;
+
+        font-size: clamp(2rem, 10vw, 3.5rem);
+
+        opacity: 1;
+        transform: none;
+    }
+}
+@media (hover: none) {
+    .projectGridOverlay,
+    .projectGridTitle {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .projectGridImage,
+    .projectGridOverlay,
+    .projectGridTitle {
+        transition: none;
+    }
+}
