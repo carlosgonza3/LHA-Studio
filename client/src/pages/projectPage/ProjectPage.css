@@ -1,0 +1,94 @@
+.projectPage {
+    width: 100%;
+    min-height: 100svh;
+}
+
+.projectPageHeader,
+.projectPageContent,
+.projectPageFooter {
+    width: min(100%, var(--page-width));
+    margin-inline: auto;
+}
+
+.projectPageHeader {
+    padding-bottom: clamp(4rem, 8vw, 8rem);
+}
+
+.projectPageMeta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding-bottom: 1rem;
+
+    border-bottom: 1px solid var(--color-border);
+
+    font-family: var(--font-body);
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.projectPageTitle {
+    max-width: 12ch;
+    margin-top: clamp(3rem, 7vw, 7rem);
+
+    font-family: var(--font-display);
+    font-size: clamp(4rem, 10vw, 11rem);
+    font-weight: 400;
+    line-height: 0.82;
+    letter-spacing: -0.06em;
+}
+
+.projectPageContent {
+    min-height: 60svh;
+}
+
+.projectPageFooter {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 2rem;
+
+    margin-top: clamp(6rem, 12vw, 12rem);
+    padding-top: 1.5rem;
+
+    border-top: 1px solid var(--color-border);
+}
+
+.projectPageFooterLabel {
+    font-family: var(--font-body);
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.projectPageNextLink {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 4.5rem);
+    line-height: 1;
+}
+
+.projectPageNextLink span:last-child {
+    transition:
+            transform var(--transition-medium);
+}
+
+.projectPageNextLink:hover span:last-child {
+    transform: translate(0.25rem, -0.25rem);
+}
+
+@media (max-width: 700px) {
+    .projectPageTitle {
+        font-size: clamp(3.5rem, 17vw, 7rem);
+    }
+
+    .projectPageFooter {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}

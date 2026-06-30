@@ -1,27 +1,48 @@
-import { Link, useParams } from 'react-router';
+import type {
+    ReactNode,
+} from 'react';
+
+import {
+    Navigate,
+    useParams,
+} from 'react-router';
+
+import DirtyBitProject from '../../components/projects/DirtyBitProject/DirtyBitProject';
+import SohnderHouseProject from '../../components/projects/SohnderHouseProject/SohnderHouseProject';
+import TyroneDmProject from '../../components/projects/TyroneDmProject/TyroneDmProject';
+import ZavaPhotosProject from '../../components/projects/ZavaPhotosProject/ZavaPhotosProject';
+
+import {
+    getProjectBySlug,
+} from '../../data/projects';
+
+import './ProjectPage.css';
+
+const projectComponents: Record<string, ReactNode> = {
+    'dirty-bit': <DirtyBitProject />,
+    'zava-photos': <ZavaPhotosProject />,
+    tyronedm: <TyroneDmProject />,
+    'sohnder-house': <SohnderHouseProject />,
+};
 
 export function ProjectPage() {
     const { projectSlug } = useParams();
 
-    const formattedTitle = projectSlug
-        ?.split('-')
-        .map((word) => {
-            return word.charAt(0).toUpperCase() + word.slice(1);
-        })
-        .join(' ');
+    const project = getProjectBySlug(projectSlug);
+
+    if (!project || !projectSlug) {
+        return <Navigate to="/not-found" replace />;
+    }
+
+    const projectContent = projectComponents[projectSlug];
+
+    if (!projectContent) {
+        return <Navigate to="/not-found" replace />;
+    }
 
     return (
-        <article className="page">
-            <p>Project case study</p>
-
-            <h1>{formattedTitle ?? 'Project'}</h1>
-
-            <h1>
-                Project details, imagery, concept, process and final results
-                will be displayed here.
-            </h1>
-
-            <Link to="/work">← All projects</Link>
-        </article>
+        <div className="projectPage">
+            {projectContent}
+        </div>
     );
 }

@@ -1,5 +1,6 @@
 import {
     useEffect,
+    useRef,
     useState,
 } from 'react';
 
@@ -9,6 +10,10 @@ import {
     useLocation,
     useNavigate,
 } from 'react-router';
+
+import {
+    projects,
+} from '../../data/projects';
 
 type NavigationClassArguments = {
     isActive: boolean;
@@ -30,7 +35,14 @@ export function Header() {
     const location = useLocation();
     const navigate = useNavigate();
 
+    const selectedWorksRef = useRef<HTMLDivElement | null>(null);
+
     const [isAboutActive, setIsAboutActive] = useState(false);
+    const [isSelectedWorksOpen, setIsSelectedWorksOpen] =
+        useState(false);
+
+    const isSelectedWorksActive =
+        location.pathname.startsWith('/work/');
 
     useEffect(() => {
         const locationState =
@@ -51,13 +63,10 @@ export function Header() {
                 block: 'start',
             });
 
-            navigate(
-                '/',
-                {
-                    replace: true,
-                    state: null,
-                },
-            );
+            navigate('/', {
+                replace: true,
+                state: null,
+            });
         });
 
         return () => {
@@ -98,6 +107,54 @@ export function Header() {
         return () => {
             observer.disconnect();
         };
+    }, [location.pathname]);
+
+    useEffect(() => {
+        function handlePointerDown(event: PointerEvent) {
+            const target = event.target;
+
+            if (!(target instanceof Node)) {
+                return;
+            }
+
+            if (selectedWorksRef.current?.contains(target)) {
+                return;
+            }
+
+            setIsSelectedWorksOpen(false);
+        }
+
+        function handleKeyDown(event: KeyboardEvent) {
+            if (event.key === 'Escape') {
+                setIsSelectedWorksOpen(false);
+            }
+        }
+
+        document.addEventListener(
+            'pointerdown',
+            handlePointerDown,
+        );
+
+        document.addEventListener(
+            'keydown',
+            handleKeyDown,
+        );
+
+        return () => {
+            document.removeEventListener(
+                'pointerdown',
+                handlePointerDown,
+            );
+
+            document.removeEventListener(
+                'keydown',
+                handleKeyDown,
+            );
+        };
+    }, []);
+
+    useEffect(() => {
+        setIsSelectedWorksOpen(false);
     }, [location.pathname]);
 
     function handleAboutClick() {
@@ -141,12 +198,57 @@ export function Header() {
                     ABOUT
                 </Link>
 
-                <NavLink
-                    className={getNavigationClass}
-                    to="/work"
+                <div
+                    ref={selectedWorksRef}
+                    className={
+                        isSelectedWorksOpen
+                            ? 'selectedWorksMenu selectedWorksMenuOpen'
+                            : 'selectedWorksMenu'
+                    }
                 >
-                    SELECTED WORKS
-                </NavLink>
+                    <button
+                        className={
+                            isSelectedWorksActive
+                                ? 'navigationLink navigationLinkActive selectedWorksTrigger'
+                                : 'navigationLink selectedWorksTrigger'
+                        }
+                        type="button"
+                        aria-haspopup="menu"
+                        aria-expanded={isSelectedWorksOpen}
+                        onClick={() => {
+                            setIsSelectedWorksOpen(
+                                (currentValue) => !currentValue,
+                            );
+                        }}
+                    >
+                        SELECTED WORKS
+                    </button>
+
+                    <div
+                        className="selectedWorksDropdown"
+                        role="menu"
+                        aria-label="Selected works"
+                    >
+                        {projects.map((project) => (
+                            <Link
+                                key={project.slug}
+                                className="selectedWorksLink"
+                                to={`/work/${project.slug}`}
+                                role="menuitem"
+                                tabIndex={
+                                    isSelectedWorksOpen
+                                        ? 0
+                                        : -1
+                                }
+                                onClick={() => {
+                                    setIsSelectedWorksOpen(false);
+                                }}
+                            >
+                                {project.title}
+                            </Link>
+                        ))}
+                    </div>
+                </div>
             </nav>
         </header>
     );

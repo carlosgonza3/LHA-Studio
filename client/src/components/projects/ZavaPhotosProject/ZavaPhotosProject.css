@@ -1,0 +1,14 @@
+.zavaPhotosProject {
+    width: 100%;
+    min-height: 100svh;
+}
+
+.zavaPhotosProjectHero {
+    display: flex;
+    min-height: 100svh;
+    align-items: center;
+    justify-content: center;
+    padding: var(--page-padding);
+    background: var(--color-black);
+    color: var(--color-cream);
+}

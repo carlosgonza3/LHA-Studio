@@ -147,17 +147,72 @@ html.headerOnDarkSection .siteHeaderScrolled {
     opacity: 1;
 }
 
-.siteLocation {
-    justify-self: end;
+/* Minimal selected works dropdown */
 
-    color: inherit;
+.selectedWorksMenu {
+    position: relative;
+}
 
-    font-size: 0.75rem;
-    font-weight: 500;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
+.selectedWorksDropdown {
+    position: absolute;
+    top: calc(100% + 1rem);
+    right: 0;
+    z-index: 110;
 
-    transition: color 500ms var(--ease-out);
+    display: flex;
+    min-width: 12rem;
+    flex-direction: column;
+
+    padding: 0.65rem 0;
+
+    border: 1px solid rgb(9 3 2 / 12%);
+
+    background: var(--color-cream);
+    box-shadow:
+            0 12px 35px rgb(9 3 2 / 10%);
+
+    color: var(--color-black);
+
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+
+    transform: translateY(-0.4rem);
+
+    transition:
+            opacity 220ms ease,
+            visibility 220ms ease,
+            transform 300ms var(--ease-out);
+}
+
+.selectedWorksMenuOpen .selectedWorksDropdown {
+    opacity: 1;
+    pointer-events: auto;
+    visibility: visible;
+
+    transform: translateY(0);
+}
+
+.selectedWorksLink {
+    display: block;
+
+    padding: 0.7rem 1rem;
+
+    font-family: var(--font-body);
+    font-size: 1rem;
+    line-height: 1.2;
+    letter-spacing: 0;
+    text-transform: none;
+
+    transition:
+            background-color 180ms ease,
+            padding-left 250ms var(--ease-out);
+}
+
+.selectedWorksLink:hover,
+.selectedWorksLink:focus-visible {
+    padding-left: 1.2rem;
+    background: rgb(9 3 2 / 5%);
 }
 
 /* Footer */
@@ -255,6 +310,15 @@ html.headerOnDarkSection .siteHeaderScrolled {
         letter-spacing: 0.06em;
     }
 
+    .selectedWorksDropdown {
+        min-width: 10rem;
+    }
+
+    .selectedWorksLink {
+        padding: 0.65rem 0.85rem;
+        font-size: 0.9rem;
+    }
+
     .siteFooter {
         padding:
                 1.25rem
@@ -283,7 +347,8 @@ html.headerOnDarkSection .siteHeaderScrolled {
 @media (prefers-reduced-motion: reduce) {
     .siteHeader,
     .navigationLink,
-    .siteLocation,
+    .selectedWorksDropdown,
+    .selectedWorksLink,
     .footerSocials a,
     .footerBottom > a {
         transition: none;
